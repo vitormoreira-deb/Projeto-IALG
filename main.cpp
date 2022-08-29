@@ -19,7 +19,7 @@ int main(){
     do{
         unsigned short escolha;
         int opcao;
-        cout<<"--->> CULTURA VIRTUAL <<---" << endl; 
+        cout<<"--->> CULTURA VIRTUAL <<--- " << endl; 
         
         cout << "1 - Cadastrar Usuário." << endl;
         cout << "2 - Consultar empréstimos e devoluções." << endl;
