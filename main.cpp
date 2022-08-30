@@ -1,9 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <locale.h>
 #include <string>
-#include <vector>
 using namespace std;
 struct dados{
     string nome;
@@ -11,14 +9,26 @@ struct dados{
     int matricula;
     string endereco;
     string telefone;
-    vector <string>email;
+    string email;
 };
-
+void inserir(int &i, int &qt){
+    for(i;i<qt; i++){
+        dados user[qt];
+    }
+}
+dados* aloca(dados vet[], int &t){
+    dados *novo=new dados[t+3];
+    copy(vet, vet+t, novo);
+    t=t+3;
+    delete[] vet;
+    return novo;
+}
 int main(){
     bool reinicio=false;
     do{
+        int t=3;
+        int i=0;
         unsigned short escolha;
-        int opcao;
         cout<<"--->> CULTURA VIRTUAL <<--- " << endl; 
         
         cout << "1 - Cadastrar Usuário." << endl;
@@ -31,8 +41,55 @@ int main(){
         cout << "8 - Sair." << endl;
         
         cout<<"--->> CULTURA VIRTUAL version: 1.0 <<---" << endl; 
+        cin >> escolha;
+        dados *cadastro=new dados[t];
+        switch(escolha){
+            case 1:
+            bool inserir;
+            do{
+                if(i<(t)){
+                    cout<<"Insira nome: ";cin>>cadastro[i].nome;
+                    cout<<"Insira CPF: ";cin>>cadastro[i].cpf;
+                    cout<<"Insira matricula: ";cin>>cadastro[i].matricula;
+                    cout<<"Insira endereço: ";cin>>cadastro[i].endereco;
+                    cout<<"Insira telefone: ";cin>>cadastro[i].telefone;
+                    cout<<"Insira e-mail: ";cin>>cadastro[i].email;
+                    while(cadastro.email.size()>0){
+                        //continua 
+                    }
+                }
+                else{
+                    char valores;
+                    cout<<"Armazenamento cheio!!!. Posso aumentar o armazenamento em mais 3 valores?"<<endl<<"1-Sim, 2-Não    "cin>>valores;
 
-        cin >> opcao;
+                    if(valores=='1'){
+                        cadastro=aloca(cadastro, t);
+                        inserir=true;
+                    }
+                    else{
+                        inserir=false;
+                    }
+                }
+            }while(inserir=true);
+            break;
+            case 2:
+            break;
+            case 3:
+            break;
+            case 4:
+            break;
+            case 5:
+            break;
+            case 6:
+            break;
+            case 7:
+            break;
+            case 8:
+            break;
+            default:
+            cout<<"Valor inválido!!!..."<<endl;
+            break;
+        }
 
 
 
