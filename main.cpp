@@ -55,7 +55,7 @@ int main(){
                     cout<<"Insira telefone: ";cin>>cadastro[i].telefone;
                     cout<<"Insira e-mail: ";cin>>cadastro[i].email;
                     while(cadastro.email.size()>0){
-                        //continua
+                        //continua 
                     }
                 }
                 else{
