@@ -19,6 +19,7 @@ dados* aloca(dados vet[], int &t){
     return novo;
 }
 int main(){
+    system("clear");
     bool reinicio=false;
     do{
         int t=3;
@@ -54,6 +55,7 @@ int main(){
                     system("clear");
                     cout<<"Deseja cadastrar novo usuário? 1-sim 2-nao ";cin>>sn;
                     if(sn=='1'){
+                        system("clear");
                         indice++;
                     }
                     else{
