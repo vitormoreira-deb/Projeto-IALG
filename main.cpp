@@ -11,6 +11,11 @@ struct dados{
     string telefone;
     string email;
 };
+struct emprestimo{
+    double numMatricula;
+    string nomeLivro;
+    string dataDev;
+};
 dados* aloca(dados vet[], int &t){
     dados *novo=new dados[t+3];
     copy(vet, vet+t, novo);
@@ -18,12 +23,13 @@ dados* aloca(dados vet[], int &t){
     delete[] vet;
     return novo;
 }
-
-struct emprestimo{
-    double numMatricula;
-    string nomeLivro;
-    string dataDev;
-};
+emprestimo* aloca(emprestimo vet[], int &t){
+    emprestimo *novo=new emprestimo[t+3];
+    copy(vet, vet+t, novo);
+    t=t+3;
+    delete[] vet;
+    return novo;
+}
 
 int main(){
     system("clear");
