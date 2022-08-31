@@ -31,6 +31,89 @@ emprestimo* aloca(emprestimo vet[], int &t){
     return novo;
 }
 
+void menu1(dados* cadastro, char sn, int qtdDado){
+    int indice=0;
+    bool inserir=true;
+    qtdDado=3;
+
+    do{
+        if(indice<qtdDado){
+            cout<<"Insira nome: ";cin.ignore();getline(cin,cadastro[indice].nome);
+            cout<<"Insira CPF: ";cin>>cadastro[indice].cpf;
+            cout<<"Insira matricula: ";cin>>cadastro[indice].matricula;
+            cout<<"Insira endereço: ";cin.ignore();getline(cin,cadastro[indice].endereco);
+            cout<<"Insira telefone: ";cin.ignore();getline(cin,cadastro[indice].telefone);
+            cout<<"Insira e-mail: ";cin.ignore();getline(cin,cadastro[indice].email);
+            system("clear");
+            cont++;
+
+            for(int i=0; i<indice; i++){
+                if(cadastro[indice].matricula == cadastro[i].matricula){
+                    cout<<"Usuário já cadastrado no sistema!"<<endl;
+                    indice--;
+                }
+            }
+            cout<<"Deseja cadastrar novo usuário? 1-sim 2-nao ";cin>>sn;
+            if(sn=='1'){
+                system("clear");
+                indice++;
+            }
+            else{
+                inserir=false;
+            }
+        }
+        else{
+            cadastro=aloca(cadastro, qtdDado);
+        }
+    } while(inserir);
+}
+void menu2(emprestimo* livroEmprestado, int &qtdEmp){
+    int busca;
+    cin>>busca;
+    
+    for(int i=0; i<qtdEmp; i++){
+        if (busca == livroEmprestado[i].numMatricula){
+            cout<<"Livros a serem devolvidos:"<<endl;
+            cout<<livroEmprestado[i].nomeLivro<<" - Devolução prevista: "<<livroEmprestado[i].dataDev<<endl;
+        }
+        else{
+            cout<<"Não há livros a serem devolvidos!";
+        }
+    }
+}
+
+void menu5(emprestimo* livroEmprestado, char sn, int &qtdEmp){
+    int indice, cont;
+    bool inserir=true;
+    qtdEmp=3; 
+    livroEmprestado = new emprestimo[qtdEmp];
+
+    do {
+        cout<<qtdEmp<<endl;
+        if(indice<qtdEmp){
+            cin>>livroEmprestado[indice].numMatricula;
+            cin.ignore();getline(cin, livroEmprestado[indice].nomeLivro);
+            cin>>livroEmprestado[indice].dataDev;
+            cont++;
+    
+            system("clear");
+            cout<<"Deseja registrar mais um empréstimo? 1-sim 2-nao ";cin>>sn;
+            if(sn=='1'){
+                system("clear");
+                indice++;
+            }
+            else{
+                inserir=false;
+            }
+        }
+        else{
+            livroEmprestado=aloca(livroEmprestado, qtdEmp);
+        }
+
+    } while(inserir);
+}
+
+//--------------------------------------------------- BEGIN MAIN
 int main(){
     system("clear");
     bool reinicio=false;
@@ -45,12 +128,13 @@ int main(){
         cout << "|| 7 - Exportar contas para arquivo binário               ||"<< endl;
         cout << "|| 8 - Sair                                               ||" << endl;
         cout << "----------------------------------------------------------"<<endl;
-        unsigned short escolha;
         cout<<"--->> CULTURA VIRTUAL version: 1.0 <<---" << endl; 
+
+        unsigned short escolha;
         cout<<"Insira um valor do menu: ";cin >> escolha;
         system("clear");
 
-        int qtdDado=3, qtdEmp=3;
+        int qtdDado, qtdEmp;
         int indice=0;
         dados *cadastro=new dados[qtdDado];
         emprestimo* livroEmprestado = NULL;
@@ -58,77 +142,17 @@ int main(){
         switch(escolha){
             char sn;
             case 1:
-                bool inserir;
-                do{
-                    if(indice<qtdDado){
-                        cout<<"Insira nome: ";cin.ignore();getline(cin,cadastro[indice].nome);
-                        cout<<"Insira CPF: ";cin>>cadastro[indice].cpf;
-                        cout<<"Insira matricula: ";cin>>cadastro[indice].matricula;
-                        cout<<"Insira endereço: ";cin.ignore();getline(cin,cadastro[indice].endereco);
-                        cout<<"Insira telefone: ";cin.ignore();getline(cin,cadastro[indice].telefone);
-                        cout<<"Insira e-mail: ";cin.ignore();getline(cin,cadastro[indice].email);
-                        system("clear");
-                        cout<<"Deseja cadastrar novo usuário? 1-sim 2-nao ";cin>>sn;
-                        if(sn=='1'){
-                            system("clear");
-                            indice++;
-                        }
-                        else{
-                            break;
-                        }
-                    }
-                    else{
-                        cadastro=aloca(cadastro, qtdDado);
-                        inserir=true;
-                    }
-                } while(inserir==true);
+                menu1(cadastro, sn, qtdDado);
                 break;
             case 2:
-                int busca;
-                cin>>busca;
-                
-                for(int i=0; i<qtdEmp; i++){
-                    if (busca == livroEmprestado[i].numMatricula){
-                        cout<<"Livros a serem devolvidos:"<<endl;
-                        cout<<livroEmprestado[i].nomeLivro<<" - Devolução prevista: "<<livroEmprestado[i].dataDev<<endl;
-                    }
-                    else{
-                        cout<<"Não há livros a serem devolvidos!";
-                    }
-                }
+                menu2(livroEmprestado, qtdEmp);
                 break;
             case 3:
                 break;
             case 4:
                 break;
             case 5:
-                qtdEmp=3; indice=0; inserir=true;
-                livroEmprestado = new emprestimo[qtdEmp];
-
-                do {
-                    cout<<qtdEmp<<endl;
-                    if(indice<qtdEmp){
-                        cin>>livroEmprestado[indice].numMatricula;
-                        cin.ignore();getline(cin, livroEmprestado[indice].nomeLivro);
-                        cin>>livroEmprestado[indice].dataDev;
-                
-                        system("clear");
-                        cout<<"Deseja registrar mais um empréstimo? 1-sim 2-nao ";cin>>sn;
-                        if(sn=='1'){
-                            system("clear");
-                            indice++;
-                        }
-                        else{
-                            break;
-                        }
-                    }
-                    else{
-                        livroEmprestado=aloca(livroEmprestado, qtdEmp);
-                        inserir=true;
-                    }
-
-                } while(inserir==true);
-
+                menu5(livroEmprestado, sn, qtdEmp);
                 break;
             case 6:
                 break;
