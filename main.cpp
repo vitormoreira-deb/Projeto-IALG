@@ -2,7 +2,25 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
+#ifdef __linux__
+    #include <unistd.h>
+#elif _WIN32
+    #include <windows.h>
+#else
+
+#endif
+
 using namespace std;
+void limpa(){
+#ifdef __linux__
+    system("clear");
+#elif _WIN32
+    #include <windows.h>
+    system("cls");
+#else
+
+#endif
+}
 struct dados{
     string nome;
     string cpf;
@@ -44,8 +62,7 @@ void menu1(dados* cadastro, char sn, int qtdDado){
             cout<<"Insira endereço: ";cin.ignore();getline(cin,cadastro[indice].endereco);
             cout<<"Insira telefone: ";cin.ignore();getline(cin,cadastro[indice].telefone);
             cout<<"Insira e-mail: ";cin.ignore();getline(cin,cadastro[indice].email);
-            system("clear");
-            cont++;
+            limpa();
 
             for(int i=0; i<indice; i++){
                 if(cadastro[indice].matricula == cadastro[i].matricula){
@@ -55,7 +72,7 @@ void menu1(dados* cadastro, char sn, int qtdDado){
             }
             cout<<"Deseja cadastrar novo usuário? 1-sim 2-nao ";cin>>sn;
             if(sn=='1'){
-                system("clear");
+                limpa();
                 indice++;
             }
             else{
@@ -96,10 +113,10 @@ void menu5(emprestimo* livroEmprestado, char sn, int &qtdEmp){
             cin>>livroEmprestado[indice].dataDev;
             cont++;
     
-            system("clear");
+            limpa();
             cout<<"Deseja registrar mais um empréstimo? 1-sim 2-nao ";cin>>sn;
             if(sn=='1'){
-                system("clear");
+                limpa();
                 indice++;
             }
             else{
@@ -115,7 +132,7 @@ void menu5(emprestimo* livroEmprestado, char sn, int &qtdEmp){
 
 //--------------------------------------------------- BEGIN MAIN
 int main(){
-    system("clear");
+    limpa();
     bool reinicio=false;
     do{
         cout<<" -------------->> BIBLIOTECA CULTURA VIRTUAL <<------------" << endl; 
@@ -132,7 +149,7 @@ int main(){
 
         unsigned short escolha;
         cout<<"Insira um valor do menu: ";cin >> escolha;
-        system("clear");
+        limpa();
 
         int qtdDado, qtdEmp;
         int indice=0;
@@ -165,7 +182,7 @@ int main(){
                 break;
         }
         //======REINICIANDO O SISTEMA ======
-        system("clear");
+        limpa();
         escolha=0;
         cout<<"Deseja voltar ao menu principal?"<<endl<<"Digite 1 para Sim ou 2 para não: ";cin>>escolha;
         if(escolha==1){
