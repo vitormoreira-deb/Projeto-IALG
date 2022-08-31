@@ -20,10 +20,10 @@ dados* aloca(dados vet[], int &t){
 }
 
 struct emprestimo{
-    int numMatricula;
+    double numMatricula;
     string nomeLivro;
     string dataDev;
-}
+};
 
 int main(){
     system("clear");
@@ -39,23 +39,22 @@ int main(){
         cout << "|| 7 - Exportar contas para arquivo binário               ||"<< endl;
         cout << "|| 8 - Sair                                               ||" << endl;
         cout << "----------------------------------------------------------"<<endl;
-        
+        unsigned short escolha;
         cout<<"--->> CULTURA VIRTUAL version: 1.0 <<---" << endl; 
         cout<<"Insira um valor do menu: ";cin >> escolha;
         system("clear");
 
         int qtdDado=3, qtdEmp=3;
         int indice=0;
-        unsigned short escolha;
         dados *cadastro=new dados[qtdDado];
         emprestimo* livroEmprestado = NULL;
 
         switch(escolha){
+            char sn;
             case 1:
                 bool inserir;
                 do{
                     if(indice<qtdDado){
-                        char sn;
                         cout<<"Insira nome: ";cin.ignore();getline(cin,cadastro[indice].nome);
                         cout<<"Insira CPF: ";cin>>cadastro[indice].cpf;
                         cout<<"Insira matricula: ";cin>>cadastro[indice].matricula;
@@ -80,32 +79,31 @@ int main(){
                 break;
             case 2:
                 int busca;
-                bool emp=false;
                 cin>>busca;
                 
                 for(int i=0; i<qtdEmp; i++){
                     if (busca == livroEmprestado[i].numMatricula){
                         cout<<"Livros a serem devolvidos:"<<endl;
                         cout<<livroEmprestado[i].nomeLivro<<" - Devolução prevista: "<<livroEmprestado[i].dataDev<<endl;
-                        emp=true;
                     }
-                    if (emp == false) cout<<"Não há livros a serem devolvidos!";
+                    else{
+                        cout<<"Não há livros a serem devolvidos!";
+                    }
                 }
-
-                for(int i=0; i<)
                 break;
             case 3:
                 break;
             case 4:
                 break;
             case 5:
-                qtdEmp=3; indice=0; inserir==true;
+                qtdEmp=3; indice=0; inserir=true;
                 livroEmprestado = new emprestimo[qtdEmp];
 
                 do {
+                    cout<<qtdEmp<<endl;
                     if(indice<qtdEmp){
                         cin>>livroEmprestado[indice].numMatricula;
-                        cin>>livroEmprestado[indice].nomeLivro;
+                        cin.ignore();getline(cin, livroEmprestado[indice].nomeLivro);
                         cin>>livroEmprestado[indice].dataDev;
                 
                         system("clear");
@@ -117,12 +115,12 @@ int main(){
                         else{
                             break;
                         }
+                    }
                     else{
-                        cadastro=aloca(cadastro, qtdEmp);
+                        livroEmprestado=aloca(livroEmprestado, qtdEmp);
                         inserir=true;
                     }
 
-                    
                 } while(inserir==true);
 
                 break;
