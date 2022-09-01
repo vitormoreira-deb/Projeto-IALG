@@ -56,21 +56,31 @@ void menu1(dados* cadastro, char sn, int qtdDado){
     cadastro = new dados[qtdDado];
 
     do{
+        string nome, cpf, matricula;
         if(indice<qtdDado){
-            cout<<"Insira nome: ";cin.ignore();getline(cin,cadastro[indice].nome);
-            cout<<"Insira CPF: ";cin>>cadastro[indice].cpf;
-            cout<<"Insira matricula: ";cin>>cadastro[indice].matricula;
-            cout<<"Insira endereço: ";cin.ignore();getline(cin,cadastro[indice].endereco);
-            cout<<"Insira telefone: ";cin.ignore();getline(cin,cadastro[indice].telefone);
-            cout<<"Insira e-mail: ";cin.ignore();getline(cin,cadastro[indice].email);
+            cout<<"Insira nome: ";cin.ignore();getline(cin,nome);
+            cout<<"Insira CPF: ";cin>>cpf;
+            cout<<"Insira matricula: ";cin>>matricula;
+            
+            int i=0;
+            bool achou=false;
+            while(i<indice && !achou){
+                if(matricula == cadastro[i].matricula){
+                    cout<<"Esse usuário já foi cadastrado no sistema!"<<endl;
+                    achou=true;
+                }
+                i++;
+            }
+            if (!achou){
+                cadastro[indice].nome = nome;
+                cadastro[indice].cpf = cpf;
+                cadastro[indice].matricula = matricula;
+                cout<<"Insira endereço: ";cin.ignore();getline(cin,cadastro[indice].endereco);
+                cout<<"Insira telefone: ";cin.ignore();getline(cin,cadastro[indice].telefone);
+                cout<<"Insira e-mail: ";cin.ignore();getline(cin,cadastro[indice].email);
+            }
             limpa();
 
-            for(int i=0; i<indice; i++){
-                if(cadastro[indice].matricula == cadastro[i].matricula){
-                    cout<<"Usuário já cadastrado no sistema!"<<endl;
-                    indice--;
-                }
-            }
             cout<<"Deseja cadastrar novo usuário? 1-sim 2-nao ";cin>>sn;
             if(sn=='1'){
                 limpa();
