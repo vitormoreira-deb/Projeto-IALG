@@ -9,7 +9,16 @@
 #else
 
 #endif
+void pausing(){
+#ifdef __linux__
+    usleep(2350*1000);
+#elif _WIN32
+    #include <windows.h>
+    Sleep(2350);
+#else
 
+#endif
+}
 using namespace std;
 void limpa(){
 #ifdef __linux__
@@ -71,13 +80,16 @@ void menu1(dados* cadastro, char sn, int qtdDado){
                 }
                 i++;
             }
-            if (!achou){
+            if (achou==false){
                 cadastro[indice].nome = nome;
                 cadastro[indice].cpf = cpf;
                 cadastro[indice].matricula = matricula;
                 cout<<"Insira endereço: ";cin.ignore();getline(cin,cadastro[indice].endereco);
                 cout<<"Insira telefone: ";cin.ignore();getline(cin,cadastro[indice].telefone);
                 cout<<"Insira e-mail: ";cin.ignore();getline(cin,cadastro[indice].email);
+            }
+            else{
+                pausing();
             }
             limpa();
 
