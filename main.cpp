@@ -216,6 +216,6 @@ int main(){
     }while(reinicio==true);
     system("clear;");
 
-    // VITOR CASA COMIGO!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // ACEITO QUE VC ME PAGUE UM MONSTER
     return 0;
 }
