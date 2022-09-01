@@ -58,10 +58,10 @@ emprestimo* aloca(emprestimo vet[], int &t){
     return novo;
 }
 
-void menu1(dados* cadastro, char sn, int qtdDado){
+void menu1(dados* cadastro, int &qtdDado){
     int indice=0;
     bool inserir=true;
-    qtdDado=3;
+    char sn;
     cadastro = new dados[qtdDado];
 
     do{
@@ -122,19 +122,19 @@ void menu2(emprestimo* livroEmprestado, int &qtdEmp){
     }
 }
 
-void menu5(emprestimo* livroEmprestado, char sn, int &qtdEmp){
-    int indice, cont;
+void menu5(emprestimo* livroEmprestado, int &qtdEmp){
+    int indice=0, cont=0;
     bool inserir=true;
-    qtdEmp=3; 
+    char sn;
     livroEmprestado = new emprestimo[qtdEmp];
 
     do {
-        cout<<qtdEmp<<endl;
         if(indice<qtdEmp){
             cin>>livroEmprestado[indice].numMatricula;
             cin.ignore();getline(cin, livroEmprestado[indice].nomeLivro);
             cin>>livroEmprestado[indice].dataDev;
             cont++;
+            cout<<"Empréstimo realizado com sucesso!";
     
             limpa();
             cout<<"Deseja registrar mais um empréstimo? 1-sim 2-nao ";cin>>sn;
@@ -151,6 +151,7 @@ void menu5(emprestimo* livroEmprestado, char sn, int &qtdEmp){
         }
 
     } while(inserir);
+    limpa();
 }
 
 //--------------------------------------------------- BEGIN MAIN
@@ -170,35 +171,33 @@ int main(){
         cout << "----------------------------------------------------------"<<endl;
         cout<<"--->> CULTURA VIRTUAL version: 1.0 <<---" << endl; 
 
-        unsigned short escolha;
+        char escolha;
         cout<<"Insira um valor do menu: ";cin >> escolha;
         limpa();
 
-        int qtdDado, qtdEmp;
-        int indice=0;
+        int qtdDado=3, qtdEmp=3;
         dados* cadastro = NULL;
         emprestimo* livroEmprestado = NULL;
 
         switch(escolha){
-            char sn;
-            case 1:
-                menu1(cadastro, sn, qtdDado);
+            case '1':
+                menu1(cadastro, qtdDado);
                 break;
-            case 2:
+            case '2':
                 menu2(livroEmprestado, qtdEmp);
                 break;
-            case 3:
+            case '3':
                 break;
-            case 4:
+            case '4':
                 break;
-            case 5:
-                menu5(livroEmprestado, sn, qtdEmp);
+            case '5':
+                menu5(livroEmprestado, qtdEmp);
                 break;
-            case 6:
+            case '6':
                 break;
-            case 7:
+            case '7':
                 break;
-            case 8:
+            case '8':
                 break;
             default:
                 cout<<"Valor inválido!!!..."<<endl;
@@ -206,9 +205,9 @@ int main(){
         }
         //======REINICIANDO O SISTEMA ======
         limpa();
-        escolha=0;
+        escolha='0';
         cout<<"Deseja voltar ao menu principal?"<<endl<<"Digite 1 para Sim ou 2 para não: ";cin>>escolha;
-        if(escolha==1){
+        if(escolha=='1'){
             reinicio=true;
         }
         else{
@@ -216,5 +215,7 @@ int main(){
         }
     }while(reinicio==true);
     system("clear;");
+
+    // VITOR CASA COMIGO!!!!!!!!!!!!!!!!!!!!!!!!!!!
     return 0;
 }
