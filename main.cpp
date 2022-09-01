@@ -39,7 +39,7 @@ struct dados{
     string email;
 };
 struct emprestimo{
-    double numMatricula;
+    string numMatricula;
     string nomeLivro;
     string dataDev;
 };
@@ -56,6 +56,11 @@ emprestimo* aloca(emprestimo vet[], int &t){
     t=t+3;
     delete[] vet;
     return novo;
+}
+
+void busca(string matricula){
+    //REALIZA AS BUSCAS BINÁRIAS COM O NÚMERO DE MATRÍCULA DO USUÁRIO
+    // PARA RETORNAR QUAIS SÃO OS LIVROS EMPRESTADOS
 }
 
 void menu1(dados* cadastro, int &qtdDado){
@@ -129,12 +134,20 @@ void menu5(emprestimo* livroEmprestado, int &qtdEmp){
     livroEmprestado = new emprestimo[qtdEmp];
 
     do {
+        int saldo=0;
+        string matricula;
+
         if(indice<qtdEmp){
-            cin>>livroEmprestado[indice].numMatricula;
+            cin>>matricula; 
+            livroEmprestado[indice].numMatricula = matricula;
             cin.ignore();getline(cin, livroEmprestado[indice].nomeLivro);
             cin>>livroEmprestado[indice].dataDev;
-            cont++;
-            cout<<"Empréstimo realizado com sucesso!";
+            //cout<<"Empréstimo realizado com sucesso!";
+
+            cout<<"Este usuário possui os seguintes livros emprestados: "<<endl;
+            busca(matricula);
+            
+            //SE HOUVER PENDÊNCIAS NA DEVOULAÇÃO, O EMPRÉSTIMO NÃO SERÁ EFETUADO
     
             limpa();
             cout<<"Deseja registrar mais um empréstimo? 1-sim 2-nao ";cin>>sn;
@@ -152,6 +165,10 @@ void menu5(emprestimo* livroEmprestado, int &qtdEmp){
 
     } while(inserir);
     limpa();
+}
+
+void menu6(){
+    // ATUALIZAR SALDO DE LIVROS EMPRESTADOS E PRINTAR NA TELA QUAIS SAO ELES PARA CADA MATRICULA QUE REALIZAR DEVOLUÇÃO
 }
 
 //--------------------------------------------------- BEGIN MAIN
