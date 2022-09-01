@@ -53,6 +53,7 @@ void menu1(dados* cadastro, char sn, int qtdDado){
     int indice=0;
     bool inserir=true;
     qtdDado=3;
+    cadastro = new dados[qtdDado];
 
     do{
         if(indice<qtdDado){
@@ -153,7 +154,7 @@ int main(){
 
         int qtdDado, qtdEmp;
         int indice=0;
-        dados *cadastro=new dados[qtdDado];
+        dados* cadastro = NULL;
         emprestimo* livroEmprestado = NULL;
 
         switch(escolha){
