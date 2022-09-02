@@ -174,8 +174,8 @@ void menu5(emprestimo* livroEmprestado, int &qtdEmp, string* data){
             cout<<"Data de devolução [dd/mm/AA]: ";cin>>devolucao;
             limpa();
             
-            //verifica se há livros emprestados com o usuário e, se houver, imprime seus nomes na tela com as respectiva datas de devolução
-            //SE HOUVER PENDÊNCIAS NA DEVOLUÇÃO, O EMPRÉSTIMO NÃO SERÁ EFETUADO
+            // verifica se há livros emprestados com o usuário e, se houver, imprime seus nomes na tela com as respectiva datas de devolução
+            // SE HOUVER PENDÊNCIAS NA DEVOLUÇÃO, O EMPRÉSTIMO NÃO SERÁ EFETUADO
             
             cout<<"Livros emprestados com o usuário:"<<endl;
             
