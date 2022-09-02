@@ -123,20 +123,25 @@ int totalDias(string data){
     return total;
 }
 
-bool buscaEmprestimo(emprestimo* livros, string busca, string* dataAtual, int registro){ //TRANSFORMAR EM BUSCA BINARIA
+void buscaEmprestimo(emprestimo* livros, string busca, string* dataAtual, int registro, bool &status){ //TRANSFORMAR EM BUSCA BINARIA
     int diasDev;
     int diasAtual = totalDias(*dataAtual); 
     for(int i=0; i<registro; i++){
+        cout<<"AAAAAAAAAAAAAAAAAAAAA"<<endl;
         if (busca == livros[i].numMatricula){
+            cout<<"BBBBBB"<<endl;
             cout<<livros[i].nomeLivro<<" - Devolução prevista: "<<livros[i].dataDev<<endl;
             diasDev = totalDias(livros[i].dataDev);
             if(diasDev < diasAtual){
-                return false;
+                cout<<"STATUS PEGO - false";
+                status = false;
             }
-            else if(diasDev >= diasAtual)
-                return true;
+            else if(diasDev >= diasAtual){
+                cout<<"STATUS PEGO - true";
+                status = true;
+            }
         }
-        else{
+        else {
             cout<<"Não há livros emprestados!"<<endl;
         }
     }
@@ -144,15 +149,16 @@ bool buscaEmprestimo(emprestimo* livros, string busca, string* dataAtual, int re
 
 void menu2(emprestimo* livroEmprestado, int qtdEmp, string* data){
     string matricula;
+    bool status;
     cin>>matricula;
     cout<<"Livros a serem devolvidos pelo usuário:"<<endl;
-    bool status = buscaEmprestimo(livroEmprestado, matricula, data, qtdEmp); //comoooo enviar o número de índice preenchidos e nao o tamnho do vetor todo??
+    buscaEmprestimo(livroEmprestado, matricula, data, qtdEmp, status); //comoooo enviar o número de índice preenchidos e nao o tamnho do vetor todo??
     
     if (status == false) cout<<"O usuário possui pendências na biblioteca.";
 }
 
 void menu5(emprestimo* livroEmprestado, int &qtdEmp, string* data){
-    int indice=0, registro=0; // registro se refere à quantidade de empréstimos registrados
+    int indice=0, registro=1; // registro se refere à quantidade de empréstimos registrados
     bool inserir=true, status;
     char sn;
     string matricula, livro, devolucao;
@@ -163,18 +169,24 @@ void menu5(emprestimo* livroEmprestado, int &qtdEmp, string* data){
 
     do {
         if(indice<qtdEmp){
-            cout<<endl<<"Matrícula: "; cin>>matricula; 
+            cout<<"Matrícula: "; cin>>matricula; 
             cout<<"Nome do livro: ";cin.ignore();getline(cin, livro);
             cout<<"Data de devolução [dd/mm/AA]: ";cin>>devolucao;
+            limpa();
             
             //verifica se há livros emprestados com o usuário e, se houver, imprime seus nomes na tela com as respectiva datas de devolução
             //SE HOUVER PENDÊNCIAS NA DEVOLUÇÃO, O EMPRÉSTIMO NÃO SERÁ EFETUADO
+            
             cout<<"Livros emprestados com o usuário:"<<endl;
-            status = buscaEmprestimo(livroEmprestado, matricula, data, registro);
+            
+            if (registro > 0){
+                buscaEmprestimo(livroEmprestado, matricula, data, registro, status);
+            }
+
             if (status == false){
                 cout<<"Há devoluções pendentes na biblioteca. O empréstimo não pode ser realizado!"<<endl;
             }
-            else if(status == true){
+            else if(status == true or registro==0){
                 livroEmprestado[indice].numMatricula = matricula;
                 livroEmprestado[indice].nomeLivro = livro;
                 livroEmprestado[indice].dataDev = devolucao;
@@ -182,7 +194,6 @@ void menu5(emprestimo* livroEmprestado, int &qtdEmp, string* data){
                 registro++;
             }
     
-            limpa();
             cout<<"Deseja registrar mais um empréstimo? 1-sim 2-nao ";cin>>sn;
             if(sn=='1'){
                 limpa();
