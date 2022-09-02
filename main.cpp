@@ -58,11 +58,6 @@ emprestimo* aloca(emprestimo vet[], int &t){
     return novo;
 }
 
-void busca(string matricula){
-    //REALIZA AS BUSCAS BINÁRIAS COM O NÚMERO DE MATRÍCULA DO USUÁRIO
-    // PARA RETORNAR QUAIS SÃO OS LIVROS EMPRESTADOS
-}
-
 void menu1(dados* cadastro, int &qtdDado){
     int indice=0;
     bool inserir=true;
@@ -72,7 +67,7 @@ void menu1(dados* cadastro, int &qtdDado){
     do{
         string nome, cpf, matricula;
         if(indice<qtdDado){
-            cout<<"Insira nome: ";cin.ignore();getline(cin,nome);
+            cout<<"Insira nome: ";cin.ignore(); getline(cin,nome);
             cout<<"Insira CPF: ";cin>>cpf;
             cout<<"Insira matricula: ";cin>>matricula;
             
@@ -112,42 +107,80 @@ void menu1(dados* cadastro, int &qtdDado){
         }
     } while(inserir);
 }
-void menu2(emprestimo* livroEmprestado, int &qtdEmp){
-    int busca;
-    cin>>busca;
-    
-    for(int i=0; i<qtdEmp; i++){
-        if (busca == livroEmprestado[i].numMatricula){
-            cout<<"Livros a serem devolvidos:"<<endl;
-            cout<<livroEmprestado[i].nomeLivro<<" - Devolução prevista: "<<livroEmprestado[i].dataDev<<endl;
+
+int totalDias(string data){
+    int conversao, dia, mes, ano, total;
+    for (char c : data){
+        if (c == '/') c = '0';
+    }
+
+    conversao = stoi(data);
+    dia = conversao/1000000;
+    mes = (conversao%100000)/1000;
+    ano = conversao%100;
+    total = ano*365 + mes*30 + dia;
+
+    return total;
+}
+
+bool buscaEmprestimo(emprestimo* livros, string busca, string* dataAtual, int registro){ //TRANSFORMAR EM BUSCA BINARIA
+    int diasDev;
+    int diasAtual = totalDias(*dataAtual); 
+    for(int i=0; i<registro; i++){
+        if (busca == livros[i].numMatricula){
+            cout<<livros[i].nomeLivro<<" - Devolução prevista: "<<livros[i].dataDev<<endl;
+            diasDev = totalDias(livros[i].dataDev);
+            if(diasDev < diasAtual){
+                return false;
+            }
+            else if(diasDev >= diasAtual)
+                return true;
         }
         else{
-            cout<<"Não há livros a serem devolvidos!";
+            cout<<"Não há livros emprestados!"<<endl;
         }
     }
 }
 
-void menu5(emprestimo* livroEmprestado, int &qtdEmp){
-    int indice=0, cont=0;
-    bool inserir=true;
+void menu2(emprestimo* livroEmprestado, int qtdEmp, string* data){
+    string matricula;
+    cin>>matricula;
+    cout<<"Livros a serem devolvidos pelo usuário:"<<endl;
+    bool status = buscaEmprestimo(livroEmprestado, matricula, data, qtdEmp); //comoooo enviar o número de índice preenchidos e nao o tamnho do vetor todo??
+    
+    if (status == false) cout<<"O usuário possui pendências na biblioteca.";
+}
+
+void menu5(emprestimo* livroEmprestado, int &qtdEmp, string* data){
+    int indice=0, registro=0; // registro se refere à quantidade de empréstimos registrados
+    bool inserir=true, status;
     char sn;
+    string matricula, livro, devolucao;
+    data = new string;
     livroEmprestado = new emprestimo[qtdEmp];
 
+    cout<<"Para realizar o empréstimo insira:"<<endl<<"Data de hoje [dd/mm/AA]: ";cin>>*data;
+
     do {
-        int saldo=0;
-        string matricula;
-
         if(indice<qtdEmp){
-            cin>>matricula; 
-            livroEmprestado[indice].numMatricula = matricula;
-            cin.ignore();getline(cin, livroEmprestado[indice].nomeLivro);
-            cin>>livroEmprestado[indice].dataDev;
-            //cout<<"Empréstimo realizado com sucesso!";
-
-            cout<<"Este usuário possui os seguintes livros emprestados: "<<endl;
-            busca(matricula);
+            cout<<endl<<"Matrícula: "; cin>>matricula; 
+            cout<<"Nome do livro: ";cin.ignore();getline(cin, livro);
+            cout<<"Data de devolução [dd/mm/AA]: ";cin>>devolucao;
             
-            //SE HOUVER PENDÊNCIAS NA DEVOULAÇÃO, O EMPRÉSTIMO NÃO SERÁ EFETUADO
+            //verifica se há livros emprestados com o usuário e, se houver, imprime seus nomes na tela com as respectiva datas de devolução
+            //SE HOUVER PENDÊNCIAS NA DEVOLUÇÃO, O EMPRÉSTIMO NÃO SERÁ EFETUADO
+            cout<<"Livros emprestados com o usuário:"<<endl;
+            status = buscaEmprestimo(livroEmprestado, matricula, data, registro);
+            if (status == false){
+                cout<<"Há devoluções pendentes na biblioteca. O empréstimo não pode ser realizado!"<<endl;
+            }
+            else if(status == true){
+                livroEmprestado[indice].numMatricula = matricula;
+                livroEmprestado[indice].nomeLivro = livro;
+                livroEmprestado[indice].dataDev = devolucao;
+                cout<<"Emprestimo reailzado com sucesso!"<<endl;
+                registro++;
+            }
     
             limpa();
             cout<<"Deseja registrar mais um empréstimo? 1-sim 2-nao ";cin>>sn;
@@ -175,6 +208,7 @@ void menu6(){
 int main(){
     limpa();
     bool reinicio=false;
+    string* data = NULL;
     do{
         cout<<" -------------->> BIBLIOTECA CULTURA VIRTUAL <<------------" << endl; 
         cout << "|| 1 - Cadastrar Usuário                                  ||"<< endl;
@@ -201,14 +235,14 @@ int main(){
                 menu1(cadastro, qtdDado);
                 break;
             case '2':
-                menu2(livroEmprestado, qtdEmp);
+                menu2(livroEmprestado, qtdEmp, data);
                 break;
             case '3':
                 break;
             case '4':
                 break;
             case '5':
-                menu5(livroEmprestado, qtdEmp);
+                menu5(livroEmprestado, qtdEmp, data);
                 break;
             case '6':
                 break;
