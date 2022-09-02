@@ -19,7 +19,7 @@
 + Realização de empréstimos/devoluções de livros
 + Ordenação dos cadastros realizados
 
-<h2>Tecnologias</h2>
+<h2>Tecnologia</h2>
 <table>
 <tr>  
   <td> Linguagem </td>
