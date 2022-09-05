@@ -186,7 +186,7 @@ void menu5(emprestimo* livroEmprestado, int &qtdEmp, string* data){
             if (status == false){
                 cout<<"Há devoluções pendentes na biblioteca. O empréstimo não pode ser realizado!"<<endl;
             }
-            else if(status == true or registro==0){
+            else if(status == true || registro==0){
                 livroEmprestado[indice].numMatricula = matricula;
                 livroEmprestado[indice].nomeLivro = livro;
                 livroEmprestado[indice].dataDev = devolucao;
