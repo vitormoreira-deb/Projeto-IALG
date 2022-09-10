@@ -9,6 +9,9 @@
 #else
 
 #endif
+
+using namespace std;
+
 void pausing(){
 #ifdef __linux__
     usleep(2350*1000);
@@ -19,7 +22,6 @@ void pausing(){
 
 #endif
 }
-using namespace std;
 void limpa(){
 #ifdef __linux__
     system("clear");
@@ -159,7 +161,7 @@ void menu2(emprestimo* livroEmprestado, int qtdEmp, string* data){
 
 void menu5(emprestimo* livroEmprestado, int &qtdEmp, string* data){
     int indice=0, registro=1; // registro se refere à quantidade de empréstimos registrados
-    bool inserir=true, status;
+    bool inserir=true, status=true;
     char sn;
     string matricula, livro, devolucao;
     data = new string;
@@ -186,11 +188,11 @@ void menu5(emprestimo* livroEmprestado, int &qtdEmp, string* data){
             if (status == false){
                 cout<<"Há devoluções pendentes na biblioteca. O empréstimo não pode ser realizado!"<<endl;
             }
-            else if(status == true || registro==0){
+            else if(status == true){
                 livroEmprestado[indice].numMatricula = matricula;
                 livroEmprestado[indice].nomeLivro = livro;
                 livroEmprestado[indice].dataDev = devolucao;
-                cout<<"Emprestimo reailzado com sucesso!"<<endl;
+                cout<<endl<<"Emprestimo realizado com sucesso!"<<endl;
                 registro++;
             }
     
